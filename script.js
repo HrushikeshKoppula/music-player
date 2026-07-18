@@ -1,6 +1,7 @@
 // --- 1. Data Setup ---
 const playlist = [
     { name: "Lost in the City Lights", artist: "Cosmo Sheldrake", art: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { name: "Lost in the City Lights", artist: "Cosmo Sheldrake", art: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80", url: "https://f004.backblazeb2.com/file/music-player-hkplays/On+The+Floor+-+Radio+Edit+-+Jennifer+Lopez+-+Spotimate.app.mp3" },
     { name: "Forest Whisper", artist: "Nature Digital", art: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
     { name: "Neon Dreams", artist: "RetroSynth", art: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&q=80", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
     { name: "Acoustic Breeze", artist: "Benjamin Tissot", art: "https://images.unsplash.com/photo-1460036521480-c1baf2728f32?w=800&q=80", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
