@@ -1,77 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Minimalist Music Player</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Ambient</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- Dynamic Blurred Background -->
-    <div class="bg-blur" id="bg-blur"></div>
-    <div class="bg-overlay"></div>
+    <!-- Background Images -->
+    <img id="bg1" class="background active" alt="">
+    <img id="bg2" class="background" alt="">
 
-    <div class="player-container">
-        
-        <!-- Header / Theme Toggle -->
-        <header class="player-header">
-            <div class="logo"><i class="fas fa-music"></i> AudioFlow</div>
-            <div class="theme-switch" id="theme-toggle">
-                <i class="fas fa-moon"></i>
-            </div>
-        </header>
+    <!-- Bottom Gradient -->
+    <div id="gradient"></div>
 
-        <div class="player-content">
-            <!-- Left: Now Playing -->
-            <div class="now-playing-section">
-                <div class="album-art-wrapper">
-                    <img src="" alt="Album Art" id="album-art" class="album-art">
-                </div>
-                
-                <div class="song-info">
-                    <h1 class="song-title" id="song-title">Title</h1>
-                    <h2 class="song-artist" id="song-artist">Artist</h2>
-                </div>
+    <!-- Song Title -->
+    <h1 id="songTitle"></h1>
 
-                <div class="progress-container">
-                    <div class="time-labels">
-                        <span id="current-time">0:00</span>
-                        <span id="total-duration">0:00</span>
-                    </div>
-                    <input type="range" id="progress-bar" min="0" max="100" value="0">
-                </div>
+    <!-- Transition Layer -->
+    <div id="transition"></div>
 
-                <div class="controls">
-                    <button class="control-btn small" id="shuffle-btn" title="Shuffle"><i class="fas fa-random"></i></button>
-                    <button class="control-btn" id="prev-btn" title="Previous"><i class="fas fa-step-backward"></i></button>
-                    <button class="control-btn play-btn" id="play-pause-btn"><i class="fas fa-play"></i></button>
-                    <button class="control-btn" id="next-btn" title="Next"><i class="fas fa-step-forward"></i></button>
-                    <button class="control-btn small" id="repeat-btn" title="Repeat"><i class="fas fa-redo"></i></button>
-                </div>
-            </div>
-
-            <!-- Right: Playlist & Search -->
-            <div class="playlist-section">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="search-input" placeholder="Search tracks or artists...">
-                </div>
-                
-                <div class="playlist-header">
-                    <h3>Up Next</h3>
-                    <span id="track-count">0 Tracks</span>
-                </div>
-
-                <ul id="playlist-list" class="playlist-list">
-                    <!-- Populated by JS -->
-                </ul>
-            </div>
+    <!-- Startup Overlay -->
+    <div id="overlay">
+        <div class="overlay-content">
+            <h2>AMBIENT</h2>
+            <p>Click anywhere to begin</p>
         </div>
     </div>
 
+    <!-- Audio -->
+    <audio id="player"></audio>
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
