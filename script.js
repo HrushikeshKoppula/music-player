@@ -1,20 +1,25 @@
-const tracks = [
+const songs = [
     {
         title: "Song One",
-        audio: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin",
-        image: "https://cdna.artstation.com/p/assets/images/images/003/252/982/large/wl-op-7ss.jpg?1471661590"
+        url: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin"
     },
     {
         title: "Song Two",
-        audio: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin",
-        image: "https://cdnb.artstation.com/p/assets/images/images/001/959/839/large/wl-op-15m.jpg?1455181085"
+        url: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin"
     },
     {
         title: "Song Three",
-        audio: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin",
-        image: "https://cdna.artstation.com/p/assets/images/images/001/218/830/large/wl-op-12s.jpg?1443928242"
+        url: "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin"
     }
 ];
+
+
+const wallpapers = [
+    "https://cdna.artstation.com/p/assets/images/images/001/394/260/large/wl-op-11s.jpg?1445677999",
+    "https://cdna.artstation.com/p/assets/images/images/001/337/630/large/wl-op-7s.jpg?1444639378",
+    "https://cdna.artstation.com/p/assets/images/images/001/218/830/large/wl-op-12s.jpg?1443928242"
+];
+
 
 const player = document.getElementById("player");
 const overlay = document.getElementById("overlay");
@@ -26,27 +31,57 @@ const backgrounds = [
     document.getElementById("bg2")
 ];
 
-let active = 0;
-let current = -1;
 
-/* -------------------------- */
+let activeBackground = 0;
+
+let currentSong = -1;
+let currentWallpaper = -1;
+
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function randomTrack() {
+
+
+function randomSong() {
 
     let next;
 
     do {
-        next = Math.floor(Math.random() * tracks.length);
-    } while (tracks.length > 1 && next === current);
+        next = Math.floor(Math.random() * songs.length);
+    }
+    while (
+        songs.length > 1 &&
+        next === currentSong
+    );
 
-    current = next;
+    currentSong = next;
 
-    return tracks[next];
+    return songs[next];
 }
+
+
+
+function randomWallpaper() {
+
+    let next;
+
+    do {
+        next = Math.floor(Math.random() * wallpapers.length);
+    }
+    while (
+        wallpapers.length > 1 &&
+        next === currentWallpaper
+    );
+
+    currentWallpaper = next;
+
+    return wallpapers[next];
+}
+
+
 
 function preloadImage(url) {
 
@@ -54,7 +89,7 @@ function preloadImage(url) {
 
         const img = new Image();
 
-        img.onload = () => resolve(url);
+        img.onload = () => resolve();
 
         img.onerror = reject;
 
@@ -64,32 +99,51 @@ function preloadImage(url) {
 
 }
 
+
+
 async function setWallpaper(url) {
 
-    const hidden = backgrounds[1 - active];
+    const nextBackground =
+        backgrounds[1 - activeBackground];
+
 
     await preloadImage(url);
 
-    hidden.classList.remove("zoom");
-    hidden.src = url;
+
+    nextBackground.classList.remove("zoom");
+
+
+    nextBackground.src = url;
+
 
     // restart animation
-    void hidden.offsetWidth;
+    void nextBackground.offsetWidth;
 
-    hidden.classList.add("zoom");
 
-    backgrounds[active].classList.remove("active");
+    nextBackground.classList.add("zoom");
 
-    hidden.classList.add("active");
 
-    active = 1 - active;
+    backgrounds[activeBackground]
+        .classList.remove("active");
+
+
+    nextBackground.classList.add("active");
+
+
+    activeBackground =
+        1 - activeBackground;
+
 }
+
+
 
 function showTitle(text) {
 
     title.textContent = text;
 
+
     title.style.opacity = 1;
+
 
     setTimeout(() => {
 
@@ -99,53 +153,74 @@ function showTitle(text) {
 
 }
 
-async function transitionTo(track) {
+
+
+async function playExperience() {
+
+    const song = randomSong();
+
+    const wallpaper = randomWallpaper();
+
 
     transition.classList.add("show");
 
+
     await sleep(1000);
 
-    await setWallpaper(track.image);
 
-    player.src = track.audio;
+    await setWallpaper(wallpaper);
+
+
+    player.src = song.url;
+
 
     await player.play();
 
-    showTitle(track.title);
+
+    showTitle(song.title);
+
 
     transition.classList.remove("show");
 
 }
 
-async function nextSong() {
 
-    const track = randomTrack();
 
-    await transitionTo(track);
+overlay.addEventListener(
+    "click",
+    async () => {
 
-}
+        overlay.classList.add("hidden");
 
-/* -------------------------- */
+        await playExperience();
 
-overlay.addEventListener("click", async () => {
+    }
+);
 
-    overlay.classList.add("hidden");
 
-    await nextSong();
 
-});
+player.addEventListener(
+    "loadedmetadata",
+    () => {
 
-/* -------------------------- */
+        const duration =
+            Math.max(player.duration, 20);
 
-player.addEventListener("loadedmetadata", () => {
 
-    backgrounds[active].style.animationDuration =
-        `${Math.max(player.duration, 20)}s`;
+        backgrounds[activeBackground]
+            .style.animationDuration =
+            `${duration}s`;
 
-});
+    }
+);
 
-player.addEventListener("ended", async () => {
 
-    await nextSong();
 
-});
+player.addEventListener(
+    "ended",
+    async () => {
+
+        await playExperience();
+
+    }
+);
