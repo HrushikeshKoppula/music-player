@@ -1,0 +1,16 @@
+name: Appwrite Heartbeat
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping-appwrite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Appwrite Console API
+        run: |
+          curl -f "https://cloud.appwrite.io/v1/projects/${{ secrets.APPWRITE_PROJECT_ID }}" \
+            -H "X-Appwrite-Project: ${{ secrets.APPWRITE_PROJECT_ID }}" \
+            -H "X-Appwrite-Key: ${{ secrets.APPWRITE_API_KEY }}"
