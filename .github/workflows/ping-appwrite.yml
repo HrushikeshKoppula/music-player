@@ -1,0 +1,17 @@
+# .github/workflows/ping-appwrite.yml
+name: Keep Appwrite Active
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping hosted file
+        run: |
+          curl -fsS --max-time 30 \
+            "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin"
