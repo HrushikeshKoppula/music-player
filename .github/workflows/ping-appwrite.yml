@@ -1,17 +1,16 @@
-# .github/workflows/ping-appwrite.yml
-name: Keep Appwrite Active
+name: Appwrite Health Heartbeat
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    # Runs every 3 days at midnight UTC
+    - cron: '0 0 */3 * *'
   workflow_dispatch:
 
 jobs:
-  ping:
+  ping-health:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Ping hosted file
+      - name: Ping Health Endpoint
         run: |
-          curl -fsS --max-time 30 \
-            "https://sgp.cloud.appwrite.io/v1/storage/buckets/6a5b396c000135854042/files/6a5b398c001c0fb4b070/view?project=6a5b392400378bf45266&impersonateuserid=&mode=admin"
+          curl -f https://cloud.appwrite.io/v1/health/ping \
+            -H "X-Appwrite-Project: 6a5b392400378bf45266"
